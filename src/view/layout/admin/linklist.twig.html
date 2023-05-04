@@ -1,0 +1,52 @@
+{{ include('/base/header.html') }}
+<div class="row">
+  <div class="col align-self-center"><a class = "pl-sm-4" href="/">Главная страница</a></div>
+  <div class="col"></div>
+  <div class="col"></div>
+  <div class="col">{{ controller('\\App\\Widgets\\CurrentLoginController', 'render', [0]) }}</div>
+</div>
+<div class="row border border-primary">
+<div class="col-3">
+    {% include '/admin/menu.twig.html' with {'roleid' : roleid} %}
+</div>
+    <div class="col-8" id="adminMainWindow">
+            <table class="table table-striped">
+          <thead>
+              <tr>
+                <th>ID</th>
+                <th>Заголовок</th>
+                <th>Адрес</th>
+              </tr>
+          </thead>
+        <tbody>
+          {% for link in linklist %}
+            <tr>
+                <td>{{ link[0] }}</td>
+                <td><a href="http://{{ servername }}/editlink/{{ link[0] }}">{{ link[1] }}</a></td>
+                <td>{{ link[2] }}&nbsp;<a href="javascript://" onclick="deleteLink({{ link[0] }})">Удалить</a></td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+</div>
+
+        <div class="modal fade" id="deleteLinkWindowError" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">Сообщение</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    Error
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{ include('/base/footer.html') }}

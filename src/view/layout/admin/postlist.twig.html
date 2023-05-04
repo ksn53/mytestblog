@@ -1,0 +1,37 @@
+{{ include('/base/header.html') }}
+<div class="row m-2">
+  <div class="col align-self-center"><a class = "pl-sm-4" href="/">Главная страница</a></div>
+  <div class="col"></div>
+  <div class="col"></div>
+  <div class="col">{{ controller('\\App\\Widgets\\CurrentLoginController', 'render', [0]) }}</div>
+</div>
+<div class="row border border-primary">
+<div class="col-3">
+    {% include '/admin/menu.twig.html' with {'roleid' : roleid} %}
+</div>
+    <div class="col-8" id="adminMainWindow">
+    <center>Список статей</center>
+    <table class="table table-striped">
+          <thead>
+              <tr>
+                <th>ID</th>
+                <th>Заголовок</th>
+                <th>автор</th>
+                <th>Создано</th>
+              </tr>
+          </thead>
+        <tbody>
+            {% for post in postlist %}
+            <tr>
+                <td>{{ post[0] }}</td>
+                <td><a href="http://{{ servername }}/editpost/{{ post[0] }}">{{ post[1] }}</a></td>
+                <td>{{ post[2] }}</td>
+                <td>{{ post[3]|slice(0,-9) }}&nbsp;<a href="javascript://" onclick="deletePost({{ post[0] }})">Удалить</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+        {{ controller('\\App\\Widgets\\PaginatorController', 'render', [postslastpage, currentpage, urlpath]) }}
+    </div>
+</div>
+{{ include('/base/footer.html') }}

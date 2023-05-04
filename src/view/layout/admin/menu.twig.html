@@ -1,0 +1,54 @@
+<nav class="navbar bg-light">
+  <!-- Links -->
+<ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link" href="/admin">Главная</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/postlist/1">Записи</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/editpost">Добавить запись</a>
+    </li>
+    {% if ((roleid == 1) or (roleid == 2)) %}
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/comments/1">Комментарии</a>
+    </li>
+    {% endif %}
+    {% if roleid == 1 %}
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/catlist">Рубрики</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/editcat">Добавить рубрику</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/files/1">Файлы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/upload">Загрузить файл</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/linklist">Ссылки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/editlink">Добавить ссылку</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/pagelist">Страницы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/editpage">Добавить страницу</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/subscribtions">Подписки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/settings">Настройки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://{{ servername }}/admin/userlist">Пользователи</a>
+    </li>
+    {% endif %}
+</ul>
+</nav>

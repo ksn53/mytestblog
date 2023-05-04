@@ -1,0 +1,120 @@
+version: '2.2'
+services:
+  application:
+    container_name: $COMPOSE_PROJECT_NAME-app
+    image: tianon/true
+    volumes:
+      - ./src:/var/www
+    networks:
+      - backend-network
+  nginx:
+    container_name: $COMPOSE_PROJECT_NAME-nginx
+    build   : ./docker/nginx/
+    env_file: .env
+    volumes_from:
+      - application
+    command: sh /usr/local/etc/entrypoint.sh
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/var/log/nginx:/var/log/nginx
+      - ./docker/nginx/entrypoint/entrypoint.sh:/usr/local/etc/entrypoint.sh
+      - $APP_NGINX_PROXY_CACHE_DIRECTORY:/var/cache/nginx/proxy_cache
+    depends_on:
+      - php
+    restart: always
+    cpus: ${DOCKER_LIMIT_CPUS_NGINX}
+    cpu_count: ${DOCKER_LIMIT_CPU_COUNT_NGINX}
+    mem_limit: ${DOCKER_LIMIT_MEM_NGINX}
+    # you have to disable port binding on Production
+    ports:
+      - 80
+    networks:
+      outside-network:
+        aliases:
+          - $COMPOSE_PROJECT_NAME
+      backend-network:
+  php:
+    depends_on:
+      - application
+      - db
+    user: "${DOCKER_UID}:${DOCKER_GID}"
+    container_name: $COMPOSE_PROJECT_NAME-php
+    build:
+      context: ./
+      dockerfile: ./docker/php-fpm/Dockerfile
+    volumes_from:
+      - application
+    volumes:
+      - ./docker/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+      - ./docker/php-fpm/${APP_ENV_NAME}/php-fpm.conf:/usr/local/etc/php-fpm.d/zz-99-php-fpm.conf
+      - ./docker/php-fpm/${APP_ENV_NAME}/php.ini:/usr/local/etc/php/conf.d/zz-99-php.env.ini
+      - ./docker/php-fpm/${APP_ENV_NAME}/docker-php-ext-opcache.ini:/usr/local/etc/php/conf.d/zz-99-docker-php-ext-opcache.ini
+      - ./docker/php-fpm/${APP_ENV_NAME}/xdebug.ini:/usr/local/etc/php/conf.d/zz-99-docker-php-ext-xdebug.ini
+    working_dir: /var/www/
+    env_file: .env
+    restart: always
+    cpus: ${DOCKER_LIMIT_CPUS_PHPFPM}
+    cpu_count: ${DOCKER_LIMIT_CPU_COUNT_PHPFPM}
+    mem_limit: ${DOCKER_LIMIT_MEM_PHPFPM}
+    networks:
+      backend-network:
+        aliases:
+          - php
+      outside-network:
+        aliases:
+          - $COMPOSE_PROJECT_NAME-php
+  db:
+    container_name: $COMPOSE_PROJECT_NAME-db
+    image: mysql:8
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --init-connect='SET NAMES UTF8;'
+    restart: always
+    depends_on:
+      - application
+    ports:
+      - 3306
+    environment:
+      - MYSQL_DATABASE=${APP_DB_DATABASE}
+      - MYSQL_USER=${APP_DB_USERNAME}
+      - MYSQL_PASSWORD=${APP_DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${APP_DB_PASSWORD}
+    volumes:
+      - ./database:/var/lib/mysql
+    cpus: ${DOCKER_LIMIT_CPUS_DB}
+    cpu_count: ${DOCKER_LIMIT_CPU_COUNT_DB}
+    mem_limit: ${DOCKER_LIMIT_MEM_DB}
+    networks:
+      outside-network:
+        aliases:
+          - $COMPOSE_PROJECT_NAME-pma
+      backend-network:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: $COMPOSE_PROJECT_NAME-phpmyadmin
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 80
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=${APP_DB_USERNAME}
+      - PMA_PASSWORD=${APP_DB_PASSWORD}
+    cpus: ${DOCKER_LIMIT_CPUS_PMA}
+    cpu_count: ${DOCKER_LIMIT_CPU_COUNT_PMA}
+    mem_limit: ${DOCKER_LIMIT_MEM_PMA}
+    networks:
+      outside-network:
+        aliases:
+          - $COMPOSE_PROJECT_NAME-pma
+      backend-network:
+
+networks:
+  backend-network:
+    #BACKEND_NETWORK_ADDITIONAL_CONFIGURATION_IPAM#
+      #BACKEND_NETWORK_ADDITIONAL_CONFIGURATION_IPAM_CONFIG#
+        #BACKEND_NETWORK_ADDITIONAL_CONFIGURATION_IPAM_CONFIG_SUBNET#
+  outside-network:
+    external:
+      name: $APP_SERVICE_NETWORK_NAME
+

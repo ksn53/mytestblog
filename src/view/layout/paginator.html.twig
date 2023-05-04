@@ -1,0 +1,28 @@
+
+{% if postsLastPage > 1 %}
+<nav class="pagination justify-content-center">
+        {% set prevPage = postsCurrentpage - 1 %}
+        {% if prevPage == 0 %}
+            {% set prevPage = 1 %}
+        {% endif %}
+        <div class="page-item {{ postsCurrentpage == 1 ? 'disabled' : '' }}">
+            <a class="page-link" href="{{ urlPath~prevPage }}">Older</a>
+        </div>
+
+    {% for i in range(1, postsLastPage) %}
+    <div class="page-item {{ postsCurrentpage == i ? 'disabled' : '' }} {{ postsCurrentpage == i ? ' active' : '' }}">
+        <a class="page-link" href="{{ urlPath~i }}">{{ i }}
+            {% if postsCurrentpage == i %}
+                <span class="sr-only">(current)</span>
+            {% endif %}
+        </a>
+    </div>
+    {% endfor %}
+
+    <div class="page-item {{ postsCurrentpage == postsLastPage ? ' disabled' : '' }}">
+        {% set nextPage = postsCurrentpage + 1 %}
+        <a class="page-link" href="{{ urlPath~nextPage }}" >Newer</a>
+    </div>
+</nav>
+{% endif %}
+<!-- end of pagination block -->

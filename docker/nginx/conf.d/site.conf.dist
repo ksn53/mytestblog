@@ -1,0 +1,40 @@
+upstream backend
+{
+    server $COMPOSE_PROJECT_NAME-php:9000;
+}
+server {
+    charset utf-8;
+    client_max_body_size 128M;
+
+    listen 80; ## listen for ipv4
+
+    server_name $COMPOSE_PROJECT_NAME;
+    index       $APP_ENTRY_POINT;
+    root        $APP_ROOT_DIRECTORY;
+
+    server_tokens off;
+    error_log   /var/log/nginx/error.log;
+
+    include conf.d/$APP_ENV_NAME.conf;
+
+
+    # nginx configuration
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /$APP_ENTRY_POINT?$args;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass  $COMPOSE_PROJECT_NAME-php:9000;
+    }
+
+    location ~ /\.(ht|svn|git) {
+        deny all;
+    }
+}

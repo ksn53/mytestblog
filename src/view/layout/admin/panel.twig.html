@@ -1,0 +1,16 @@
+{{ include('/base/header.html') }}
+<div class="row m-2">
+  <div class="col align-self-center"><a class = "pl-sm-4" href="/">Главная страница</a></div>
+  <div class="col"></div>
+  <div class="col"></div>
+  <div class="col">{{ controller('\\App\\Widgets\\CurrentLoginController', 'render', [0]) }}</div>
+</div>
+<div class="row border border-primary">
+<div class="col-3">
+    {% include '/admin/menu.twig.html' with {'roleid' : roleid} %}
+</div>
+<div class="col-8" id="adminMainWindow">
+    Основная страница панели управления.
+</div>
+</div>
+{{ include('/base/footer.html') }}

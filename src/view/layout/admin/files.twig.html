@@ -1,0 +1,57 @@
+{{ include('/base/header.html') }}
+<div class="row m-2">
+  <div class="col align-self-center"><a class = "pl-sm-4" href="/">Главная страница</a></div>
+  <div class="col"></div>
+  <div class="col"></div>
+  <div class="col">{{ controller('\\App\\Widgets\\CurrentLoginController', 'render', [0]) }}</div>
+</div>
+<div class="row border border-primary">
+<div class="col-3">
+    {% include '/admin/menu.twig.html' with {'roleid' : roleid} %}
+</div>
+<div class="col-8" id="adminMainWindow">
+    <center>Список файлов</center>
+    <table class="table table-striped">
+          <thead>
+              <tr>
+                <th>имя</th>
+                <th>мини</th>
+                <th></th>
+              </tr>
+          </thead>
+        <tbody>
+            {% if filenames is null %}
+                No files
+            {% else %}
+                {% for file in filenames %}
+                <tr>
+                    <td>{{ file['filename'] }}</td>
+                    <td><img src="/files/{{ file['preview'] }}" width="80"></td>
+                    <td><a href="javascript://" onclick="deleteFile('{{ file['filename'] }}')">Удалить</a></td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    {% if lastpage is defined %}
+        {{ controller('\\App\\Widgets\\PaginatorController', 'render', [lastpage, currentpage, urlpath]) }}
+    {% endif %}
+
+<div class="modal fade" id="deleteWindowError" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">Message</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    Error
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{{ include('/base/footer.html') }}

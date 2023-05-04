@@ -1,0 +1,30 @@
+{{ include('/base/header.html') }}
+  <body>
+    <div class="container">
+{{ include('headerpage.twig.html') }}
+{{ controller('\\App\\Widgets\\TopmenuController', 'render', []) }}
+{{ controller('\\App\\Widgets\\BigfeaturedpostController', 'render', [1]) }}
+
+<div class="row mb-2">
+    {{ controller('\\App\\Widgets\\SmallfeaturedpostController', 'render', [2]) }}
+    {{ controller('\\App\\Widgets\\SmallfeaturedpostController', 'render', [3]) }}
+</div>
+
+  <main role="main" class="container"><!-- main container -->
+    <div class="row"><!--content row open-->
+    <div class="col-md-8 blog-main">
+        {{ controller('\\App\\Widgets\\PostRollController', 'render', [postperpage, currentpage]) }}
+        {{ controller('\\App\\Widgets\\PaginatorController', 'render', [postslastpage, currentpage, urlpath]) }}
+    </div>
+<!-- block main close -->
+{{ include('sidebar.html') }}
+</div><!-- /.row -->
+</main><!-- /.container -->
+<!-- footer-->
+    <footer class="blog-footer">
+      <p>Blog template built for Bootstrap by @mdo.</p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+{{ include('/base/footer.html') }}

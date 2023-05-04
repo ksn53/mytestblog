@@ -1,0 +1,20 @@
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {
+        "illuminate/database": "*",
+        "illuminate/events": "*",
+        "illuminate/pagination": "*",
+        "twig/twig": "*",
+        "twig/extensions": "*",
+        "symfony/mailer": "*",
+        "symfony/mime": "*",
+        "symfony/validator": "*",
+        "symfony/finder": "*",
+        "symfony/filesystem": "*",
+        "knplabs/knp-paginator-bundle": "^4.0.0"
+    }
+}

@@ -1,0 +1,11 @@
+<div class="row ml-3">
+    {% if currentLogin != "" %}
+        <div id="currentUserName">
+            <a href="http://{{ servername }}/profile">{{ currentLogin }}</a>
+        </div>
+        <a class="btn btn-sm btn-outline-secondary ml-2" href="http://{{ servername }}/profile/logout">Выход</a>
+    {% else %}
+        <a class="btn btn-sm btn-outline-secondary ml-2" href="http://{{ servername }}/profile/register">Регистрация</a>
+        <a class="btn btn-sm btn-outline-secondary ml-2" href="http://{{ servername }}/profile/login">Войти</a>
+    {% endif %}
+</div>

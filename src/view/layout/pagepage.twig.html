@@ -1,0 +1,24 @@
+{{ include('/base/header.html') }}
+  <body>
+    <div class="container">
+{{ include('headerpage.twig.html') }}
+{{ controller('\\App\\Widgets\\TopmenuController', 'render', []) }}
+
+  <main role="main" class="container"><!-- main container -->
+    <div class="row"><!--content row open-->
+    <div class="col-md-8 blog-main">
+        {{ controller('\\App\\Widgets\\SinglePageController', 'render', [pageid]) }}
+
+    </div>
+<!-- block main close -->
+{{ include('sidebar.html') }}
+</div><!-- /.row -->
+</main><!-- /.container -->
+<!-- footer-->
+    <footer class="blog-footer">
+      <p>Blog template built for Bootstrap by @mdo.</p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+{{ include('/base/footer.html') }}

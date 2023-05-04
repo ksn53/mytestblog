@@ -1,0 +1,43 @@
+{{ include('/base/header.html') }}
+<div class="row m-2">
+  <div class="col align-self-center"><a class = "pl-sm-4" href="/">Главная страница</a></div>
+  <div class="col"></div>
+  <div class="col"></div>
+  <div class="col">{{ controller('\\App\\Widgets\\CurrentLoginController', 'render', [0]) }}</div>
+</div>
+<div class="row border border-primary">
+<div class="col-3">
+    {% include '/admin/menu.twig.html' with {'roleid' : roleid} %}
+</div>
+<div class="col-8" id="adminMainWindow">
+    загрузка файлов.
+
+<form class="md-form" id="editDataForm" method="post" action="" enctype="multipart/form-data">
+    <input type="hidden" name="mode" value="UploadFile">
+    <div class="file-field medium">
+        <div class="btn btn-outline-secondary btn-rounded waves-effect float-left">
+            <input type="file" name="uploadfile">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary ml-2" id="editButton">загрузить</button>
+</form>
+
+    <div class="modal fade" id="registerFormWindowMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">Сообщение</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body" id="statusMessage">
+                    Message
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+{{ include('/base/footer.html') }}

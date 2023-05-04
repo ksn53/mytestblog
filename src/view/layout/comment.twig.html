@@ -1,0 +1,25 @@
+<div class="container mb-3 border primary" id="comment{{ id }}">
+    <div class="row">
+        {% if shift != 0 %}
+            {% for i in range(1, shift) %}
+                <div class="commentspacer"></div>
+            {% endfor %}
+        {% endif %}
+        <div class="col-sm m-1">
+                <div class="row border primary mb-2">{{ title }} {{ author }} {{ created_at|slice(0,-9) }}</div>
+                <div class="row border primary mb-2">
+                    <div class="col-sm-2 mr-1">
+                        {% if userpic != "" %}
+                            <img src="/files/{{ userpic }}" width="100px">
+                        {% else %}
+                            <img src="/files/empty-avatar.jpg" width="100px">
+                        {% endif %}
+                    </div>
+                    <div class="col-sm">
+                        {{ content }}
+                    </div>
+                </div>
+        </div>
+    </div>
+    <a href="javascript://" onclick="moveForm('#comment{{ id }}', {{ id }})">Ответить</a>
+</div>

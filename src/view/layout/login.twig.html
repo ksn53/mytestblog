@@ -1,0 +1,55 @@
+{{ include('/base/header.html') }}
+  <body>
+    <div class="container">
+      <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-4 pt-1">
+          </div>
+          <div class="col-4 text-center" id="myPrettyTestBlock">
+            <a class="blog-header-logo text-dark" href="/">My Test Blog</a>
+          </div>
+          <div class="col-4 d-flex justify-content-end align-items-center">
+          </div>
+        </div>
+      </header>
+
+  <main role="main" class="container"><!-- main container -->
+    <div class="row">
+    <div class="col-md-8 blog-main">
+    <!--login form-->
+    <div id="loginFormWindow" style="width: 500px;">
+        <form class="p-3 p-md-5" id="editDataForm" method="post" action="/profile" enctype="multipart/form-data">
+            <input type="hidden" name="mode" value="Login">
+            <input type="text" name="login" class="form-control mb-2"  placeholder="username" required="">
+            <input type="password" name="password" class="form-control mb-2" id="inputPassword" placeholder="Password" required="">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            <button type="button" class="btn btn-primary" id="editButton">Войти</button>
+        </form>
+    <div class="modal fade" id="registerFormWindowMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">Сообщение</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body" id="statusMessage">
+                    Message
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+<!--login form-->
+    </div>
+
+<!-- block main close -->
+
+</div><!-- /.row -->
+
+</main><!-- /.container -->
+
+<!-- footer-->
+{{ include('/base/footer.html') }}
+

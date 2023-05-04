@@ -1,0 +1,96 @@
+{{ include('/base/header.html') }}
+<div class="row m-2">
+    <div class="col align-self-center"><a class = "pl-sm-4" href="/">Главная страница</a></div>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col">{{ controller('\\App\\Widgets\\CurrentLoginController', 'render', [0]) }}</div>
+</div>
+<div class="row border border-primary">
+<div class="col-3">
+    {% include '/admin/menu.twig.html' with {'roleid' : roleid} %}
+</div>
+    <div class="col-8" id="adminMainWindow">
+        <!-----INPUTFORM--------------------------------------------------------------->
+        <form id="editDataForm" method="post" action="" enctype="multipart/form-data" class="m-3">
+            <input type="hidden" name="mode" value="{{ mode }}">
+            <input type="hidden" name="id" value="{{ post[0] }}">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Заголовок</label>
+                <input name="title" type="text" class="form-control" id="exampleFormControlInput1" value='{{ post[1] }}' required="">
+            </div>
+        <label for="teaserpicInput">Картинка для привлечения внимания</label>
+        <div class="form-group">
+                <button type="button" class="btn btn-primary d-inline-block" id="addTeaserpicButton" onclick="showTeaserpicForm()">Добавить кдпв</button>
+                <div class="d-inline-block" style="width: 300px;">
+                    <input name="teaserpic" type="text" class="form-control" id="teaserpicInput" value='{{ post[6] }}'>
+                </div>
+        </div>
+          <button type="button" class="btn btn-primary mb-1" id="addMediaButton" onclick="showAddFileForm()">Добавить медиафайл</button>
+          <div class="form-group">
+            <textarea name="content" class="form-control" id="contentTextarea" rows="15" required="">{{ post[2] }}</textarea>
+          </div>
+            <div class="form-group">
+                <label for="registerFormWindowGroup">Категория</label>
+                <select class="form-control" id="editPostFormCategory" name="category">
+                    {% for category in categorys %}
+                            {% if category[0] == post[5] %}
+                                <option value="{{ category[0] }}" selected>{{ category[1] }}</option>
+                            {% else %}
+                                <option value="{{ category[0] }}">{{ category[1] }}</option>
+                            {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+          <button type="submit" class="btn btn-primary" id="editButton" style="width: 150px;">Применить</button>
+        </form>
+<!-----INPUTFORM--------------------------------------------------------------->
+    <div class="modal fade" id="registerFormWindowMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">Сообщение</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body" id="statusMessage">
+                    Message
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addMediaForm" tabindex="-1" role="dialog" aria-labelledby="addMediaLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">Добавить файл с картинкой</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    {{ controller('\\App\\Widgets\\FileListController', 'render', ['selectFile']) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addTeaserForm" tabindex="-1" role="dialog" aria-labelledby="addMediaLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">Добавить файл для кдпв</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    {{ controller('\\App\\Widgets\\FileListController', 'render', ['selectTeaserpic']) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+{{ include('/base/footer.html') }}

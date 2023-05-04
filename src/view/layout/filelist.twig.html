@@ -1,0 +1,14 @@
+    <table class="table table-striped">
+          <thead>
+              <tr>
+                <th>имя</th>
+              </tr>
+          </thead>
+        <tbody>
+            {% for file in filenames %}
+            <tr>
+                <td><a href="javascript://" onclick="{{ selectFunction }}('{{ file }}')">{{ file }}</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>

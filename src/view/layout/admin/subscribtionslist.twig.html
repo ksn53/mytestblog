@@ -1,0 +1,51 @@
+{{ include('/base/header.html') }}
+<div class="row">
+  <div class="col align-self-center"><a class = "pl-sm-4" href="/">Главная страница</a></div>
+  <div class="col"></div>
+  <div class="col"></div>
+  <div class="col">{{ controller('\\App\\Widgets\\CurrentLoginController', 'render', [0]) }}</div>
+</div>
+<div class="row border border-primary">
+<div class="col-3">
+    {% include '/admin/menu.twig.html' with {'roleid' : roleid} %}
+</div>
+    <div class="col-8" id="adminMainWindow">
+        <table class="table table-striped">
+          <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+              </tr>
+          </thead>
+        <tbody>
+        {% for subscribe in subscribtions %}
+            <tr>
+                <td>{{ subscribe[0] }}</td>
+                <td>{{ subscribe[1] }}
+                  &nbsp;<a href="javascript://" onclick="deleteSub({{ subscribe[0] }})">Удалить</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
+
+    </div>
+</div>
+
+        <div class="modal fade" id="deleteWindowError" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">Сообщение</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    Error
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{ include('/base/footer.html') }}

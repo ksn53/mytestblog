@@ -1,0 +1,18 @@
+<div class="jumbotron  p-0 p-md-0 text-white rounded bg-dark">
+    <div class="container m-1">
+        <div class="row">
+            <div class="col-sm p-4" style="width: 60%;">
+                <h1 class="display-4 font-italic"><a href="{{ urlPath }}">{{ title }}</a></h1>
+                <p class="lead my-3">{{ content|truncate(160,true)|striptags }}</p>
+                <p class="lead mb-0"><a href="{{ urlPath }}" class="text-white font-weight-bold">Читать далее...</a></p>
+            </div>
+            <div class="col-sm" style="max-height: 400px; width: 60px;">
+                {% if teaserpic != "" %}
+                    <img src="/files/{{ teaserpic }}" style="height: 100%; width: 100%; object-fit: contain; float: right;">
+                {% else %}
+                    no picture
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

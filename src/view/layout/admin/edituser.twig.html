@@ -1,0 +1,91 @@
+{{ include('/base/header.html') }}
+<div class="row">
+  <div class="col align-self-center"><a class = "pl-sm-4" href="/">Главная страница</a></div>
+  <div class="col"></div>
+  <div class="col"></div>
+  <div class="col">{{ controller('\\App\\Widgets\\CurrentLoginController', 'render', [0]) }}</div>
+</div>
+<div class="row border border-primary">
+<div class="col-3">
+    {% include '/admin/menu.twig.html' with {'roleid' : roleid} %}
+</div>
+    <div class="col-8" id="adminMainWindow">
+        <!-----INPUTFORM--------------------------------------------------------------->
+        <form id="editDataForm" method="post" action="" enctype="multipart/form-data" class="mb-5 mt-1">
+            <input type="hidden" name="mode" value="{{ mode }}">
+            <input type="hidden" name="id" value="{{ user['id'] }}">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Имя пользователя</label>
+                <input name="name" type="text" class="form-control" id="userName" value='{{ user['name'] }}' required="" style="width: 400px;">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">пароль</label>
+                <input name="password" type="password" class="form-control" id="userPassword" value="{{ user['password'] }}" required="" style="width: 400px;">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">email</label>
+                <input name="email" type="email" class="form-control" id="userEmail" value="{{ user['email'] }}" required="" style="width: 400px;">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="subscribedStatus" name="subscribed"
+                    {% if user['subscribed'] == 1 %}
+                        checked=""
+                    {% endif %}>
+                <label class="form-check-label" for="subscribedStatus">Подписан на рассылку</label>
+            </div>
+            <div class="form-group">
+                <label class="form-check-label" for="userpic">Аватар картинка</label>
+                {% if user['userpic'] != "" %}
+                    <img id="userpic" src="/files/{{ user['userpic'] }}" width="150">
+                {% else %}
+                    <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/150x150?theme=thumb" alt="Card image cap">
+                {% endif %}
+                <div class="file-field medium">
+                    <div class="btn btn-outline-secondary btn-rounded waves-effect float-left">
+                        <input type="file" name="uploadUserpicfile" id="uploadUserpicControl">
+                        <span id="previewPicture"></span>
+                    </div>
+                </div>
+            </div><br><br>
+            <div class="form-group">
+                <label class="form-check-label" for="contentAbout">обо мне</label>
+                <textarea name="about" class="form-control" id="contentAbout" rows="5">{{ user['about'] }}</textarea>
+            </div>
+            <div class="form-group" style="width: 400px;">
+                <label for="registerFormWindowGroup">группа:</label>
+                    {% if roleid == 3 %}
+                        Пользователь
+                    {% else %}
+                        <select class="form-control" id="editPostFormCategory" name="role">
+                        {% for role in roles %}
+                                {% if role[0] == user['role'] %}
+                                    <option value="{{ role[0] }}" selected>{{ role[1] }}</option>
+                                {% else %}
+                                    <option value="{{ role[0] }}">{{ role[1] }}</option>
+                                {% endif %}
+                        {% endfor %}
+                        </select>
+                    {% endif %}
+            </div>
+          <button type="submit" class="btn btn-primary" id="editButton" style="width: 100px;">Submit</button>
+        </form>
+        <!-----INPUTFORM---------------------------------------------------------------------->
+    <div class="modal fade" id="registerFormWindowMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">Сообщение</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body" id="statusMessage">
+                    Message
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+{{ include('/base/footer.html') }}

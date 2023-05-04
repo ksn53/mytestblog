@@ -1,0 +1,5 @@
+<div class="blog-post">
+    <a href="{{ postLink }}"><h2 class="blog-post-title">{{ title }}</h2></a>
+        <p class="blog-post-meta">{{ created_at|slice(0,-9) }} by <a href="#">{{ author }}</a></p>
+        <p>{{ content|truncate(350,true)|striptags }}</p>
+</div>

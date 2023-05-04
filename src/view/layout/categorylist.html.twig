@@ -1,0 +1,8 @@
+          <div class="p-3">
+            <h4 class="font-italic">Рубрики</h4>
+            <ol class="list-unstyled mb-0">
+            {% for key, article in articles %}
+                <li><a href="http://{{ servername }}/category/{{ key }}/page/1">{{ article }}</a></li>
+            {% endfor %}
+            </ol>
+          </div>
